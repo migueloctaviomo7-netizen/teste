@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Página não encontrada | BarberTime{% endblock %}
+{% block content %}
+<section class="empty-state container">
+    <p class="eyebrow">ERRO 404</p>
+    <h1>Página não encontrada</h1>
+    <p>O endereço acessado não existe ou foi alterado.</p>
+    <a class="btn" href="{{ url_for('inicio') }}">Voltar ao início</a>
+</section>
+{% endblock %}

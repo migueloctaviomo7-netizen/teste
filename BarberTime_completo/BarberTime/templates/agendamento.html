@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Agendar | BarberTime{% endblock %}
+{% block head %}
+<script src="{{ url_for('static', filename='js/agendamento.js') }}" defer></script>
+{% endblock %}
+{% block content %}
+<section class="form-page">
+    <form class="form-card" id="formAgendamento" action="{{ url_for('agendamento') }}" method="post">
+        <p class="eyebrow">RESERVE SEU MOMENTO</p>
+        <h1>Agende seu horário</h1>
+        <p class="muted">Olá, {{ cliente_nome }}! Escolha o serviço e o horário.</p>
+
+        <label for="servico">Serviço</label>
+        <select id="servico" name="servico" required>
+            <option value="">Selecione um serviço</option>
+            {% for servico in servicos %}
+            <option value="{{ servico['id'] }}">{{ servico['nome'] }} — {{ servico['duracao_min'] }} min — R$ {{ "%.2f"|format(servico['preco_centavos'] / 100)|replace(".", ",") }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="barbeiro">Barbeiro</label>
+        <select id="barbeiro" name="barbeiro" required>
+            <option value="">Selecione um profissional</option>
+            {% for barbeiro in barbeiros %}
+            <option value="{{ barbeiro['id'] }}">{{ barbeiro['nome'] }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="data">Data</label>
+        <input id="data" name="data" type="date" min="{{ hoje }}" required>
+
+        <label for="horario">Horário disponível</label>
+        <select id="horario" name="horario" required disabled>
+            <option value="">Selecione primeiro serviço, barbeiro e data</option>
+        </select>
+        <p class="hint" id="mensagemHorarios">Os horários disponíveis serão carregados após as seleções.</p>
+
+        <button class="btn btn-full" type="submit">Confirmar agendamento</button>
+    </form>
+</section>
+{% endblock %}

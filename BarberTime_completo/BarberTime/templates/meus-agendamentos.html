@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Meus agendamentos | BarberTime{% endblock %}
+{% block content %}
+<section class="section container dashboard">
+    <div class="section-heading left">
+        <p class="eyebrow">SUA AGENDA</p>
+        <h1>Meus agendamentos</h1>
+        <p>Acompanhe suas reservas e cancele quando necessário.</p>
+    </div>
+
+    <a class="btn" href="{{ url_for('agendamento') }}">+ Novo agendamento</a>
+
+    {% if agendamentos %}
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Serviço</th><th>Barbeiro</th><th>Data</th>
+                    <th>Horário</th><th>Preço</th><th>Status</th><th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for item in agendamentos %}
+                <tr>
+                    <td>{{ item['servico'] }}</td>
+                    <td>{{ item['barbeiro'] }}</td>
+                    <td>{{ item['data'] }}</td>
+                    <td>{{ item['horario'] }}</td>
+                    <td>R$ {{ "%.2f"|format(item['preco_centavos'] / 100)|replace(".", ",") }}</td>
+                    <td><span class="status {{ item['status'] }}">{{ item['status']|capitalize }}</span></td>
+                    <td>
+                        {% if item['status'] == 'confirmado' %}
+                        <form action="{{ url_for('cancelar_agendamento', agendamento_id=item['id']) }}" method="post" onsubmit="return confirm('Deseja cancelar este agendamento?')">
+                            <button class="btn-danger" type="submit">Cancelar</button>
+                        </form>
+                        {% else %}—{% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <h2>Você ainda não tem agendamentos</h2>
+        <p>Quando fizer sua primeira reserva, ela aparecerá aqui.</p>
+        <a class="btn" href="{{ url_for('agendamento') }}">Escolher horário</a>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

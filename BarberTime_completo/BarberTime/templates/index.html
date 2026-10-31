@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}BarberTime | Agende seu horário{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="container hero-content">
+        <p class="eyebrow">ESTILO • CUIDADO • PRATICIDADE</p>
+        <h1>Seu estilo começa <span>aqui.</span></h1>
+        <p class="hero-text">Escolha seu serviço, selecione o barbeiro e reserve seu horário em poucos passos.</p>
+        <div class="hero-actions">
+            <a class="btn" href="{{ url_for('agendamento') if logged_in else url_for('cadastro') }}">Agendar agora</a>
+            <a class="btn btn-outline" href="#servicos">Ver serviços</a>
+        </div>
+        <div class="hero-note">Atendimento com hora marcada • Agendamento online</div>
+    </div>
+</section>
+
+<section class="section container" id="servicos">
+    <div class="section-heading">
+        <p class="eyebrow">NOSSO MENU</p>
+        <h2>Serviços em destaque</h2>
+        <p>Escolha o cuidado ideal para você.</p>
+    </div>
+    <div class="cards">
+        {% for servico in servicos %}
+        <article class="service-card">
+            <div class="service-icon">✂</div>
+            <h3>{{ servico["nome"] }}</h3>
+            <p>{{ servico["descricao"] }}</p>
+            <div class="service-meta">
+                <span>{{ servico["duracao_min"] }} min</span>
+                <strong>R$ {{ "%.2f"|format(servico["preco_centavos"] / 100)|replace(".", ",") }}</strong>
+            </div>
+            <a class="text-link" href="{{ url_for('agendamento') if logged_in else url_for('cadastro') }}">Reservar horário →</a>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="cta">
+    <div class="container cta-inner">
+        <div>
+            <p class="eyebrow">SEM FILAS, SEM COMPLICAÇÃO</p>
+            <h2>Seu próximo horário está a poucos cliques.</h2>
+        </div>
+        <a class="btn" href="{{ url_for('agendamento') if logged_in else url_for('cadastro') }}">Começar agora</a>
+    </div>
+</section>
+{% endblock %}
+<head>
+
+    <a href="{{ url_for('agendamento') }}" class="botao">
+    Agendar agora
+</a>
+
+    <a href="{{ url_for('cadastro') }}" class="botao">
+    Criar minha conta
+</a>
+
+    <a href="{{ url_for('login') }}" class="botao">
+    Fazer login
+</a>
+
+        <link rel="stylesheet" href="css/estilo.css">
+
+
+</head>

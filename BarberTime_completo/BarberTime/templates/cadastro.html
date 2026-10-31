@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Criar conta | BarberTime{% endblock %}
+{% block content %}
+<section class="form-page">
+    <form class="form-card" action="{{ url_for('cadastro') }}" method="post">
+        <p class="eyebrow">BEM-VINDO À BARBERTIME</p>
+        <h1>Crie sua conta</h1>
+        <p class="muted">Cadastre-se para reservar e gerenciar seus horários.</p>
+
+        <label for="nome">Nome completo</label>
+        <input id="nome" name="nome" type="text" maxlength="100" autocomplete="name" required>
+
+        <label for="email">E-mail</label>
+        <input id="email" name="email" type="email" maxlength="254" autocomplete="email" required>
+
+        <label for="telefone">Telefone</label>
+        <input id="telefone" name="telefone" type="tel" maxlength="20" autocomplete="tel" placeholder="(32) 99999-9999" required>
+
+        <label for="senha">Senha (mínimo de 8 caracteres)</label>
+        <input id="senha" name="senha" type="password" minlength="8" maxlength="128" autocomplete="new-password" required>
+
+        <label for="confirmar_senha">Confirme a senha</label>
+        <input id="confirmar_senha" name="confirmar_senha" type="password" minlength="8" maxlength="128" autocomplete="new-password" required>
+
+        <button class="btn btn-full" type="submit">Criar minha conta</button>
+        <p class="form-foot">Já tem conta? <a href="{{ url_for('login') }}">Entrar</a></p>
+    </form>
+</section>
+{% endblock %}

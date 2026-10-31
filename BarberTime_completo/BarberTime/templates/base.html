@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111111">
+    <title>{% block title %}BarberTime{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+<header class="topo">
+    <nav class="menu container">
+        <a class="logo" href="{{ url_for('inicio') }}">Barber<span>Time</span></a>
+        <div class="nav-links">
+            <a href="{{ url_for('inicio') }}">Início</a>
+            <a href="{{ url_for('inicio') }}#servicos">Serviços</a>
+            {% if logged_in %}
+                <a href="{{ url_for('agendamento') }}">Agendar</a>
+                <a href="{{ url_for('meus_agendamentos') }}">Meus horários</a>
+                <form class="inline-form" action="{{ url_for('sair') }}" method="post">
+                    <button class="link-button" type="submit">Sair</button>
+                </form>
+            {% else %}
+                <a href="{{ url_for('login') }}">Entrar</a>
+                <a class="btn btn-small" href="{{ url_for('cadastro') }}">Criar conta</a>
+            {% endif %}
+        </div>
+    </nav>
+</header>
+
+{% with mensagens = get_flashed_messages(with_categories=true) %}
+    {% if mensagens %}
+    <div class="flash-wrap container" aria-live="polite">
+        {% for categoria, mensagem in mensagens %}
+            <div class="flash {{ categoria }}">{{ mensagem }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endwith %}
+
+<main>
+{% block content %}{% endblock %}
+</main>
+
+<footer class="rodape">
+    <div class="container">
+        <a class="logo" href="{{ url_for('inicio') }}">Barber<span>Time</span></a>
+        <p>Seu próximo corte começa com um bom agendamento.</p>
+        <small>Projeto demonstrativo — personalize os dados antes de publicar.</small>
+    </div>
+</footer>
+{% block scripts %}{% endblock %}
+</body>
+</html>
